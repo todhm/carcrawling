@@ -1,0 +1,56 @@
+*.py[co]
+*.pyc
+*.DS_*
+# Packages
+*.egg
+*.egg-info
+dist
+eggs
+parts
+bin
+var
+sdist
+develop-eggs
+.installed.cfg
+__pycache__
+
+
+#pycharm 
+*.xml
+*.iml
+
+# Installer logs
+pip-log.txt
+
+# Unit test / coverage reports
+.coverage
+.tox
+
+#Translations
+*.mo
+
+#Mr Developer
+venv
+*.pyc
+bower_components
+node_modules
+logs
+
+#Settings File
+credentials.json
+token.json
+
+#toolarge csv file
+es_goods.csv
+es_goodsOption.csv 
+es_scmManage.csv
+es_with_cate.csv
+
+#envfiles
+.secrets.env
+token.json
+credentials.json
+
+
+#notebook
+notebook

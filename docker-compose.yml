@@ -1,0 +1,63 @@
+version: '3.7'
+services:
+  mongo:
+    container_name: mongo
+    image: mongo:4.1.7-xenial
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - mdb-data:/data/db
+    networks:
+      - airflow_backend
+
+  postgres:
+    image: fidelkang/car_postgres
+    build:
+      context: ./postgres
+      dockerfile: Dockerfile
+    container_name: postgres
+    restart: always
+    ports:
+      - 5432:5432
+    env_file:
+      - ./envfiles/.airflow_development.env
+    networks:
+      - airflow_backend
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  airflow:
+    image: puckel/docker-airflow
+    container_name: airflow
+    restart: always
+    depends_on:
+      - postgres
+    env_file:
+      - ./envfiles/.airflow_development.env
+      - ./envfiles/.secrets.env
+
+    volumes:
+      - ./airflow/dags:/usr/local/airflow/dags
+      - ./airflow/requirements.txt:/requirements.txt
+    ports:
+        - "8080:8080"
+    command: webserver
+    networks:
+      - airflow_backend
+    healthcheck:
+        test: ["CMD-SHELL", "[ -f /usr/local/airflow/airflow-webserver.pid ]"]
+        interval: 30s
+        timeout: 30s
+        retries: 3
+  
+
+    
+volumes:
+  media:
+  mdb-data:
+  postgres-data:
+
+networks:
+  airflow_backend:
+
