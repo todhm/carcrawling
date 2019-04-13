@@ -16,8 +16,8 @@ class CarAuctionDao:
             func.max(Car.car_auction_start_price).label('max_car_price'),
             func.min(Car.car_auction_start_price).label('min_car_price'),
             func.avg(Car.kilos).label('average_car_kilos'),
-            func.avg(Car.kilos).label('max_car_kilos'),
-            func.avg(Car.kilos).label('min_car_kilos'),
+            func.max(Car.kilos).label('max_car_kilos'),
+            func.min(Car.kilos).label('min_car_kilos'),
         ) \
         .filter(Car.auction_id==Auction.id) \
         .group_by(Car.car_brand,Car.car_name) \
